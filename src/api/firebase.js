@@ -40,9 +40,6 @@ onAuthStateChanged(auth, async (user)=>{
   );
 }
 
-
-
-
 export async function adminUser(user){
 
   return get(ref(database,'admins'))//

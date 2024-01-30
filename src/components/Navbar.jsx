@@ -6,7 +6,10 @@ import { FaShoppingCart } from "react-icons/fa";
 import User from './User';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import {adminUser, login, logout} from '../api/firebase';
+import Button from './ui/Button';
+
 //import {login, logout, onUserStateChange } from '../api/firebase';
+
 
 const auth = getAuth();
 
@@ -20,7 +23,8 @@ export default function Navbar(){
 
 useEffect(()=>{ 
     onAuthStateChanged(auth, async (user) => {
-              const updatedUser = user ? await adminUser(user) : null;
+        const updatedUser = user ? await adminUser(user) : null;
+
               setUser(updatedUser)}) 
         }, []);
 
@@ -34,13 +38,14 @@ useEffect(()=>{
             <nav className='flex items-center gap-4 font-semibold'>
                 <Link to = '/products'>Products</Link>
                 <Link to = '/carts' className='text-brand'><FaShoppingCart /></Link>
-                <Link to= '/products/new' className='text-2xl text-brand'>
+                
+                {user && user.isAdmin && (<Link to= '/products/new' className='text-2xl text-brand'>
                     <CiEdit/>
                 </Link>
+                )}
                 {user && <User user={user}/>}
-                {!user && <button onClick={()=>login()}>Log In</button>}
-                {user && <button onClick={()=>logout()}>Log Out</button>}
-              
+                {!user && <Button text={'LogIn'} onClick ={()=>login()} />}
+                {user && <Button text ={'LogOut'} onClick ={()=>logout()} />}
             </nav>
         </header>
     )
