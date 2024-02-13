@@ -34,18 +34,11 @@ export default function NewProduct() {
       .finally(() => setIsUploading(false));
   };
 
+  //className='w-full text-center'
   return (
-    <section className='w-full text-center'>
-      <h2 className='text-2xl font-bold my-4'>Add New Product</h2>
-      {success && <p className='my-2'>✅ {success}</p>}
-      {file && (
-        <img
-          className='w-96 mx-auto mb-2'
-          src={URL.createObjectURL(file)}
-          alt='local file'
-        />
-      )}
-      <form className='flex flex-col px-12' onSubmit={handleSubmit}>
+    <section className='flex flex-col  p-4 md:flex-row '  >
+     
+      <form  className='flex flex-col text-center w-full p-10 basis-5/12'  onSubmit={handleSubmit}>
         <input
           type='file'
           accept='image/*'
@@ -95,9 +88,22 @@ export default function NewProduct() {
         />
         <Button
           text={isUploading ? 'Loading' : 'Add New Product'}
-          disabled={isUploading}
+          disabled={isUploading} 
         />
       </form>
+
+      <div className='flex flex-col text-center py-2  basis-5/12'>
+      <h2 className='text-2xl font-bold'>Add New Product</h2>
+      {success && <p className=' mx-25 my-3'>✅ {success}</p>}
+      {file && (
+        <img
+          className='py-2'
+          src={URL.createObjectURL(file)}
+          alt='local file'
+        />
+      )}
+      </div>
+     
     </section>
   );
 }

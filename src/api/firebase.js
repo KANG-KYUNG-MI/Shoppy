@@ -7,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getDatabase, ref, set, get } from 'firebase/database';
+import { getDatabase, ref, set, get, remove } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -29,13 +29,16 @@ export function logout() {
   signOut(auth).catch(console.error);
 }
 
+// wonder about a user's statements
 export function onUserStateChange(callback) {
   onAuthStateChanged(auth, async (user) => {
     const updatedUser = user ? await adminUser(user) : null;
+    console.log(user);
     callback(updatedUser);
   });
 }
 
+// check if a user is admin or not
 async function adminUser(user) {
   return get(ref(database, 'admins')) //
     .then((snapshot) => {
@@ -48,6 +51,7 @@ async function adminUser(user) {
     });
 }
 
+//add a new product
 export async function addNewProduct(product, imageUrl) {
   const id = uuid();
   return set(ref(database, `products/${id}`), {
@@ -59,6 +63,7 @@ export async function addNewProduct(product, imageUrl) {
   });
 }
 
+//get product
 export async function getProducts() {
   return get(ref(database, 'products')).then((snapshot) => {
     if (snapshot.exists()) {
@@ -66,4 +71,22 @@ export async function getProducts() {
     }
     return [];
   });
+}
+
+// retirve info on products
+export async function getCart(userId){
+ return get(ref(database, `carts/${userId}`))
+ .then((snapshot) => {
+  const items = snapshot.val() || {};
+  return Object.values(items);
+ });
+}
+
+export async function addOrUpdateToCart(userId, product){
+  return set(ref(database, `carts/${userId}/${product.id}`), product)
+}
+
+
+export async function removeFromCart(userId, product){
+  return remove(ref(database, `carts/${userId}/${product.id}`))
 }

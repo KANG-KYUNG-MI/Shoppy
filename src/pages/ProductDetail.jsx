@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import { useAuthContext } from '../context/AuthContext';
+import {addOrUpdateToCart} from '../api/firebase';
 
 export default function ProductDetail() {
+  const {uid} = useAuthContext()
   const {
     state: {
       product: { id, imageUrl, title, description, category, price, options },
@@ -11,7 +14,8 @@ export default function ProductDetail() {
   const [selected, setSelected] = useState(options && options[0]);
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = (e) => {
-    // 여기서 장바구니에 추가하면 됨!
+    const product = { id, imageUrl, title, price, option: selected, quantity:1}
+    addOrUpdateToCart  (uid, product);
   };
 
   return (
@@ -25,6 +29,7 @@ export default function ProductDetail() {
             ₩{price}
           </p>
           <p className='py-4 text-lg'>{description}</p>
+          
           <div className='flex items-center'>
             <label className='text-brand font-bold' htmlFor='select'>
               Option:
@@ -34,7 +39,7 @@ export default function ProductDetail() {
               className='p-2 m-4 flex-1 border-2 border-dashed border-brand outline-none'
               onChange={handleSelect}
               value={selected}
-            >
+                   >
               {options &&
                 options.map((option, index) => (
                   <option key={index}>{option}</option>
@@ -43,6 +48,7 @@ export default function ProductDetail() {
           </div>
           <Button text='Add to Cart' onClick={handleClick} />
         </div>
+     
       </section>
     </>
   );
