@@ -36,10 +36,7 @@ export default function MyCart() {
             </div>
                 <Button text='ORDER HERE'/>
 
-            </div>
-            
-
-              
+            </div>            
                 <ul>
                   {products && products.map((product) =>(
                     <CartItem key={product.id} product={product} uid={uid}/>

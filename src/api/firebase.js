@@ -88,6 +88,6 @@ export async function addOrUpdateToCart(userId, product){
 }
 
 // CHECK< CHECK or productId product.id!!!!
-export async function removeFromCart(userId, product){
-  return remove(ref(database, `carts/${userId}/${product.id}`))
+export async function removeFromCart(userId, productId){
+  return remove(ref(database, `carts/${userId}/${productId}`))
 }

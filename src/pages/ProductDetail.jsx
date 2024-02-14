@@ -21,9 +21,10 @@ export default function ProductDetail() {
   return (
     <>
       <p className='mx-12 mt-4 text-gray-700'>{category}</p>
-      <section className='flex flex-col md:flex-row p-4'>
-        <img className='w-full px-4 basis-7/12' src={imageUrl} alt={title} />
-        <div className='w-full basis-5/12 flex flex-col p-4'>
+      <section className='flex flex-col items-center md:flex-row p-4'>
+        <img className='w-96 basis-6/12 px-4 ' src={imageUrl} alt={title} />
+        
+        <div className='w-full basis-6/12 flex flex-col '>
           <h2 className='text-3xl font-bold py-2'>{title}</h2>
           <p className='text-2xl font-bold py-2  border-b border-gray-400'>
             ₩{price}
@@ -31,9 +32,7 @@ export default function ProductDetail() {
           <p className='py-4 text-lg'>{description}</p>
           
           <div className='flex items-center'>
-            <label className='text-brand font-bold' htmlFor='select'>
-              Option:
-            </label>
+            <label className='text-brand font-bold' htmlFor='select'> Option: </label>
             <select
               id='select'
               className='p-2 m-4 flex-1 border-2 border-dashed border-brand outline-none'
@@ -42,11 +41,14 @@ export default function ProductDetail() {
                    >
               {options &&
                 options.map((option, index) => (
-                  <option key={index}>{option}</option>
+                  <option className='flex text-center' key={index}>{option}</option>
                 ))}
             </select>
           </div>
-          <Button text='Add to Cart' onClick={handleClick} />
+<div className='flex flex-col text-center'>
+<Button text='Add to Cart' onClick={handleClick} />
+</div>
+         
         </div>
      
       </section>

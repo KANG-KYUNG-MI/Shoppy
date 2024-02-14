@@ -6,6 +6,8 @@ import { addOrUpdateToCart, removeFromCart } from '../api/firebase';
 const Icons_Class = 'transition-all cursor-pointer  hover:text-brand hover:scale-105 mx-1 text-2xl'
 
 
+
+
 export default function CartItem(
     { uid,
       product, 

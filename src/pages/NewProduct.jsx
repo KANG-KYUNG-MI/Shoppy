@@ -2,12 +2,24 @@ import React, { useState } from 'react';
 import { addNewProduct } from '../api/firebase';
 import { uploadImage } from '../api/uploader';
 import Button from '../components/ui/Button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
+
+  const queryClient = useQueryClient();
+
+  const addProduct = useMutation(
+   {mutationFn: ({product, url})=>addNewProduct(product, url), 
+   onSuccess: ()=>queryClient.invalidateQueries(['products'])
+   } 
+   
+    )
+
+
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -18,20 +30,18 @@ export default function NewProduct() {
     }
     setProduct((product) => ({ ...product, [name]: value }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsUploading(true);
     uploadImage(file) //
       .then((url) => {
-        addNewProduct(product, url) //
-          .then(() => {
-            setSuccess('Successfully Add it!');
-            setTimeout(() => {
-              setSuccess(null);
-            }, 4000);
-          });
-      })
-      .finally(() => setIsUploading(false));
+        addProduct.mutate({product, url},
+                          {onSuccess: ()=>{
+                            setSuccess('Successfully Add it!');
+                            setTimeout(() => {setSuccess(null)}, 4000)}}
+                            )
+      }).finally(() => setIsUploading(false));
   };
 
   //className='w-full text-center'
