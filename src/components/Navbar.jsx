@@ -2,11 +2,12 @@
 import { Link } from 'react-router-dom';
 import { FaShopify } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
-import { FaShoppingCart } from "react-icons/fa";
+
 import User from './User';
 import Button from './ui/Button';
 
 import { useAuthContext } from '../context/AuthContext';
+import CartStatus from './CartStatus';
 
 export default function Navbar(){
 
@@ -21,9 +22,10 @@ const {user, login, logout} = useAuthContext();
 
             <nav className='flex items-center gap-4 font-semibold'>
                 <Link to = '/products'>Products</Link>
+                {user && 
+                (<Link to = '/carts' className=''><CartStatus/>
+                </Link>)}
 
-                {user && <Link to = '/carts' className='text-brand'><FaShoppingCart /> 
-                </Link>}
                 {user && user.isAdmin && (<Link to= '/products/new' className='text-2xl'>
                                             <CiEdit/> </Link>)}
                 {user && <User user={user}/>}

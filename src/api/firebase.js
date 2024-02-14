@@ -78,6 +78,7 @@ export async function getCart(userId){
  return get(ref(database, `carts/${userId}`))
  .then((snapshot) => {
   const items = snapshot.val() || {};
+  console.log(items);
   return Object.values(items);
  });
 }
@@ -86,7 +87,7 @@ export async function addOrUpdateToCart(userId, product){
   return set(ref(database, `carts/${userId}/${product.id}`), product)
 }
 
-
+// CHECK< CHECK or productId product.id!!!!
 export async function removeFromCart(userId, product){
   return remove(ref(database, `carts/${userId}/${product.id}`))
 }
