@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { addNewProduct } from '../api/firebase';
 import { uploadImage } from '../api/uploader';
 import Button from '../components/ui/Button';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function NewProduct() {

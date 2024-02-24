@@ -22,8 +22,8 @@ export default function MyCart() {
     )
 
     return <section className='flex flex-col'>
-            <p className='text-2xl flex justify-center items-center font-bold p-2'>My Cart</p>
-            {!hasProducts && <p> Cart is empty</p>}
+            <p className='text-4xl flex justify-center items-center font-bold p-2'>My Cart</p>
+            {!hasProducts && <p className='text-center text-2xl p-10 font-bold text-brand'> Cart is empty  </p>}
             {hasProducts && (
             <> 
             <div className='text-center p-4'>

@@ -4,7 +4,8 @@ import { getProducts } from '../api/firebase';
 import ProductCard from './ProductCard';
 
 export default function Products() {
-    const {isLoading, error, data: products} = useQuery({queryKey:['products'],queryFn: ()=>getProducts()}) 
+    const {isLoading, error, data: products}
+              = useQuery({queryKey:['products'], queryFn: ()=>getProducts()}) 
     return (
         <>
            {isLoading && <p>Loading...</p>} 
