@@ -7,9 +7,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [success, setSuccess] = useState();
+  const [success, setSuccess] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -118,3 +118,4 @@ export default function NewProduct() {
     </section>
   );
 }
+

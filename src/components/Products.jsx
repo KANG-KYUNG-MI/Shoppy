@@ -5,11 +5,13 @@ import ProductCard from './ProductCard';
 
 export default function Products() {
     const {isLoading, error, data: products}
-              = useQuery({queryKey:['products'], queryFn: ()=>getProducts()}) 
+              = useQuery({queryKey:['products'], 
+                          queryFn: ()=>getProducts(), 
+                          staleTime: 1000*3}) 
     return (
         <>
            {isLoading && <p>Loading...</p>} 
-           {error && <p>{error}</p>}
+           {error && <p>{error.message}</p>}
 
            <ul className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
             {products && 
